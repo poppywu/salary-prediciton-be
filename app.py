@@ -1,13 +1,10 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 import numpy as np
 import tensorflow as tf
 from transformers import pipeline
 import joblib
 
 app = Flask(__name__)
-CORS(app)
-print(tf.__version__)
 
 # Hugging Face model for skills extraction
 extractor = pipeline('ner', model="algiraldohe/lm-ner-linkedin-skills-recognition")
