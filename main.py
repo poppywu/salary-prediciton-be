@@ -3,8 +3,10 @@ import numpy as np
 import tensorflow as tf
 from transformers import pipeline
 import joblib
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Hugging Face model for skills extraction
 extractor = pipeline('ner', model="algiraldohe/lm-ner-linkedin-skills-recognition")
@@ -14,6 +16,7 @@ model = tf.keras.models.load_model('salary_prediction_model.keras')
 
 @app.route('/api/predict-salary', methods=['POST'])
 def predict_salary():
+    print(request)
     data = request.json
     print(data)
     title = data.get('title')
@@ -121,4 +124,4 @@ def separate_skills(skills):
     return skills_dict
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080)
